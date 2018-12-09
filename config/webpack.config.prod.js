@@ -146,7 +146,11 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,
-            include: paths.appSrc,
+            include: [
+              paths.appSrc,
+              `${paths.appNodeModules}/react-native-elements`,
+              `${paths.appNodeModules}/react-native-vector-icons`
+            ],
             loader: require.resolve('babel-loader'),
             options: {
               // The 'react-native' preset is recommended to match React Native's packager
