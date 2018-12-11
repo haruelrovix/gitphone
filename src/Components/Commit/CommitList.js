@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 
 import styles from '../Shared.style';
+import withHeader from '../../HOCs/withHeader';
 
 const CommitList = () => (
   <View style={styles.container}>
@@ -9,4 +10,4 @@ const CommitList = () => (
   </View>
 );
 
-export default CommitList
+export default withHeader({ title: 'Commits' })(CommitList);
