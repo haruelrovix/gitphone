@@ -3,8 +3,14 @@ import { View } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 
 import styles from './Shared.style';
+import { withRouter } from '../Utils/Routing';
 
 class Home extends PureComponent {
+  onPressButton = () => {
+    // Go to Commit screen
+    this.props.history.push('/commit');
+  }
+
   render() {
     const { input, button } = styles;
 
@@ -26,15 +32,16 @@ class Home extends PureComponent {
           title='SUBMIT'
           icon={{
             color: 'white',
-            name:'paper-plane',
+            name: 'paper-plane',
             size: 15,
             type: 'font-awesome'
           }}
           buttonStyle={button.containerStyle}
+          onPress={this.onPressButton}
         />
       </View>
     );
   }
 }
 
-export default Home;
+export default withRouter(Home);
