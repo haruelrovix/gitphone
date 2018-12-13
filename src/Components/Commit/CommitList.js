@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, Dimensions, FlatList, Platform, View } from 'react-native';
-import { Avatar, ListItem } from 'react-native-elements';
+import { Avatar, ListItem, Text } from 'react-native-elements';
 import { compose } from 'redux';
 import fetch from 'fetch-hoc';
 
@@ -25,15 +25,20 @@ const leftElementStyle = {
 class CommitList extends React.PureComponent {
   keyExtractor = (item) => item.sha
 
-  renderLeftElement = (item) => (
-    <View style={leftElementStyle}>
-      <Avatar
-        source={{ uri: item.author.avatar_url }}
-        size='medium'
-        rounded
-      />
-    </View>
-  )
+  renderLeftElement = (item) => {
+    const initials = item.commit.author.name.match(/\b\w/g) || [];
+
+    return (
+      <View style={leftElementStyle}>
+        <Avatar
+          title={((initials.shift() || '') + (initials.pop() || ''))}
+          source={{ uri: (item.author && item.author.avatar_url) || undefined }}
+          size='medium'
+          rounded
+        />
+      </View>
+    );
+  }
 
   renderItem = ({ item }) => (
     <ListItem
@@ -48,6 +53,12 @@ class CommitList extends React.PureComponent {
   renderContent = () => (
     this.props.loading ?
       <ActivityIndicator color='#87ceeb' /> :
+      this.renderFlatList()
+  )
+
+  renderFlatList = () => (
+    this.props.error ?
+      <Text h4>Error: {this.props.data.message || 'Something went wrong 😕'}</Text> :
       <FlatList
         keyExtractor={this.keyExtractor}
         data={this.props.data}
