@@ -149,6 +149,8 @@ module.exports = {
             include: [
               paths.appSrc,
               `${paths.appNodeModules}/react-native-elements`,
+              `${paths.appNodeModules}/react-native-ratings`,
+              `${paths.appNodeModules}/react-native-status-bar-height`,
               `${paths.appNodeModules}/react-native-vector-icons`
             ],
             loader: require.resolve('babel-loader'),
